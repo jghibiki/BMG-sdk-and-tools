@@ -40,7 +40,7 @@ https://drive.google.com/uc?export=download&id=
 2. Open up the in-game options menu.
 3. Uncheck "Mod Caching". This will require TTS to reach out to the hosting server to re-fetch the card sheets instead 
   of using cached copies.
-4. Load the deck and/or drag the "Saved Object" onto the table. TTS should post a message that it is loading, and
+4. Load the mod. (For saved objects, drag them onto the tabletop.) TTS should post a message that it is loading, and
   after a few moments the updated cards should load.
 5. (Optional) Re-enable "Mod Caching" to avoid needing to re-download all assets whenever you load a game.
 
