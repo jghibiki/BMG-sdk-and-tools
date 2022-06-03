@@ -7,11 +7,11 @@ from dataclasses import dataclass
 class CharacterAffiliation:
 
     def __init__(self,
-                 affiliation_id,
+                 affiliation_id: int,
                  can_be_team_boss: bool,
                  always_team_boss: bool,
                  compendium: "Compendium"):
-        self.id = affiliation_id
+        self.id = int(affiliation_id)
         self.can_be_team_boss = can_be_team_boss
         self.always_team_boss = always_team_boss
         self._compendium = compendium

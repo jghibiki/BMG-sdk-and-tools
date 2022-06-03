@@ -3,3 +3,4 @@ pillow
 requests
 unidecode
 tqdm
+python-docx

@@ -44,6 +44,7 @@ class Character:
         self.name = name
         self.alias = alias
         self.affiliations = affiliations
+        self._affiliation_ids = list(map(lambda e: e.id, affiliations))
         self._rival_affiliation_ids = rival_affiliations_ids
         self.ranks = [RankType(r) for r in rank_ids]
         self._weapon_ids = weapon_ids
@@ -102,6 +103,8 @@ class Character:
     def get_card_url(self):
         return f"https://gilham.solutions/cards/{self.id}"
 
+    def has_affiliation(self, id):
+        return id in self._affiliation_ids
 
 
 

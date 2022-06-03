@@ -8,14 +8,14 @@ if TYPE_CHECKING:
 @dataclass
 class Affiliation:
     def __init__(self,
-                 id: str,
+                 id: int,
                  name: str,
                  image: str,
                  icon: str,
                  is_team: bool,
                  eternal: bool,
                  compendium: "Compendium"):
-        self.id = id
+        self.id = int(id)
         self.name = name
         self.image = image
         self.icon = icon
@@ -24,6 +24,7 @@ class Affiliation:
         self._compendium = compendium
 
         self._characters = None
+        self._all_characters = None
         self._equipment = None
 
     @property
@@ -35,10 +36,11 @@ class Affiliation:
         if self._characters is None:
             self._characters = list(
                 filter(
-                    lambda c: self in c.affiliations and not c.eternal, # TODO validate this
+                    lambda c: c.has_affiliation(self.id) and not c.eternal, # TODO validate this
                     self._compendium.characters.all
                 )
             )
+        return self._characters
 
     @property
     def all_characters(self):
@@ -46,13 +48,14 @@ class Affiliation:
         Get all characters with this affiliation including eternal characters
         :return:
         """
-        if self._characters is None:
-            self._characters = list(
+        if self._all_characters is None:
+            self._all_characters = list(
                 filter(
-                    lambda c: self in c.affiliations, # TODO validate this
+                    lambda c: c.has_affiliation(self.id),
                     self._compendium.characters.all
                 )
             )
+        return self._all_characters
 
     @property
     def equipment(self):
@@ -65,7 +68,7 @@ class Affiliation:
             )
 
     def __repr__(self):
-        return f"Affiliation[{self.name}]"
+        return f"Affiliation[{self.name} {self.id}]"
 
 
 
