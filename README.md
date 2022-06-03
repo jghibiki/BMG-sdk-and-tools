@@ -51,7 +51,7 @@ by affiliation, meaning that some cards usable by multiple affiliations may be d
 
 The latest generated sheets can be found on [Google Drive](https://drive.google.com/drive/folders/1rOblle0vGKcGQrTGBC88SlWbJ21hlL58?usp=sharing).
 
-### Updates
+## Updates
 
 **2022/06/03**
 - Adds compendium SDK for future use. The compendium sources its data from the api that backs the BMG app.
