@@ -71,6 +71,10 @@ by affiliation, meaning that some cards usable by multiple affiliations may be d
 
 The latest generated sheets can be found on [Google Drive](https://drive.google.com/drive/folders/1rOblle0vGKcGQrTGBC88SlWbJ21hlL58?usp=sharing).
 
+## TODO
+- Finish implementing SDK
+- Create separate sections for eternal and non-eternal cards in each affiliation .docx for easier printing
+
 ## Updates
 
 **2022/06/03**
