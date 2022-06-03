@@ -9,7 +9,7 @@ Special thanks to `Tobias1087` on the [Arkham Rejects Discord](https://discord.g
 renderer that makes this possible.
 
 
-[Link to generated card sheets](https://discord.com/channels/446255654978715649/480222798816608257/979443599315968020)
+[Link to generated card sheets](https://drive.google.com/drive/folders/1QLG_V4D5yEktQPRdAHFSVNVBvVjaJXOX?usp=sharing)
 
 
 A note on importing the card sheets from Google Drive. The generated "sharable" link from google drive will not work 
@@ -27,6 +27,17 @@ https://drive.google.com/uc?export=download&id=
 ```
 
 <hr>
+
+### Updates
+
+**2022/06/03**
+- Adds compendium SDK for future use. The compendium sources its data from the api that backs the BMG app.
+- Scrape operation skips id's that do not have actual characters by using the compendium sdk to know which character
+    ids are valid.
+- Scrape now detects when the character image is loaded instead of 4s for each character. This reducdes the scraping 
+    time from 40 minutes to ~5 minutes depending on internet speeds.
+
+
 
 **Copyright Note:**
 

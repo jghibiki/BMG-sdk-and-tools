@@ -1,11 +1,15 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from shutil import rmtree
 from pathlib import Path
 from PIL import Image
+from compendium.compendium_loader import CompendiumLoader
+from tqdm import tqdm
 
-base_url = "https://gilham.solutions/cards/{}"
 output = Path("./output")
 card_output = output / "cards"
 sheet_output = output / "sheets"
@@ -16,32 +20,53 @@ def setup_browser():
 
 
 def sanitize_name(name):
-    return name.replace(" ", "_")
+    return name.replace(" ", "_").replace('"', "")
 
 
 def scrape():
     browser = setup_browser()
+    compendium = CompendiumLoader().load()
 
-    card_count = 724
+    for character in tqdm(compendium.characters.all):
+        browser.get(character.get_card_url())
+        delay = 5
 
-    for i in range(card_count):
-        browser.get(base_url.format(i+1))
-        time.sleep(3)
         try:
-            elem = browser.find_element(By.CLASS_NAME, "Card_frontAndBack__2x2Hx")
-            name = elem.find_element(By.CLASS_NAME, "Card_alias__3_rw0").text
+            # ensure div exists
+            (
+                WebDriverWait(browser, delay)
+                    .until(
+                        EC.visibility_of_element_located(
+                            (By.CLASS_NAME, "Card_card__39xAa")
+                        )
+                    )
+            )
+
+            # wait till image loads
+            browser.execute_async_script("""
+                var done = arguments[0];
+                var a = new Image;
+                a.onload = () => done(true);
+                a.src = document.getElementsByClassName( 'Card_card__39xAa' )[0].style.backgroundImage.replace('url(\"', "").replace('\")', "")
+            """)
+
+            # scrape parent element
+            elem = browser.find_element(By.CLASS_NAME, "Card_characters__iuvFJ")
+
+            name = f"{character.alias}__{character.name}"
             sanitized_name = sanitize_name(name)
             children = elem.find_elements(By.XPATH, "./*")
             front = children[0]
             back = children[1]
-            output_dir = card_output / f"{i+1}_{sanitized_name}"
+            output_dir = card_output / f"{character.id}_{sanitized_name}"
             output_dir.mkdir()
             front.screenshot(str(output_dir / "front.png"))
             back.screenshot(str(output_dir / "back.png"))
             print(f"Scraped {name}")
-        except Exception as e:
-            print(e)
+        except TimeoutException:
+            print("Load took too long")
     browser.close()
+    exit(0)
 
 
 def build_sheet(cards, sheet_number):
@@ -88,9 +113,9 @@ def build_sheets():
 def main():
     if output.exists():
         rmtree(output)
+
     output.mkdir()
     card_output.mkdir()
-    rmtree(sheet_output)
     sheet_output.mkdir()
 
     print("Scraping Cards")
