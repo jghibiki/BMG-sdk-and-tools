@@ -1,5 +1,26 @@
 # Batman Miniature Game SDK & Utils
 
+## Compendium SDK
+
+A WIP python library that exposes the BMG api response via a python api.
+
+Example:
+```python 
+from compendium.compendium_loader import CompendiumLoader
+
+compendium = CompendiumLoader().load()
+
+print(compendium.affiliations.all)
+print(compendium.affiliations.eternal)
+print(compendium.affiliations.non_eternal)
+print(compendium.affiliations.teams)
+print(compendium.affiliations.not_teams)
+
+print(compendium.characters.all)
+print(compendium.characters.eternal)
+print(compendium.characters.non_eternal)
+
+```
 
 ## Scraper
 Scrapes [this site](https://gilham.solutions/cards/1) for Batman Miniature Game character cards.
