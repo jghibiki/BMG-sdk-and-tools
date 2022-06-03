@@ -32,7 +32,7 @@ Then the Id needs to be added to the end of this base url:
 https://drive.google.com/uc?export=download&id=
 ```
 
-### Updating Custom Decks in TTS:*
+### Updating Custom Decks in TTS:
 
 *Note: this method should work for "Saved Objects" as well.
 
