@@ -17,7 +17,7 @@ renderer that makes this possible.
 [Link to generated card sheets](https://drive.google.com/drive/folders/1QLG_V4D5yEktQPRdAHFSVNVBvVjaJXOX?usp=sharing)
 
 
-**Importing the Sheets as Custom Decks in TTS**:
+### Importing the Sheets as Custom Decks in TTS
 A note on importing the card sheets from Google Drive. The generated "sharable" link from google drive will not work 
 with TTS. This is because the "sharable" link is actually to a web based image browser. To derive the URL needed for
 TTS, get the image id from the sharable link:
@@ -32,7 +32,7 @@ Then the Id needs to be added to the end of this base url:
 https://drive.google.com/uc?export=download&id=
 ```
 
-**Updating Custom Decks in TTS:**
+### Updating Custom Decks in TTS:*
 
 *Note: this method should work for "Saved Objects" as well.
 
