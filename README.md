@@ -34,7 +34,7 @@ https://drive.google.com/uc?export=download&id=
 
 ### Updating Custom Decks in TTS:
 
-*Note: this method should work for "Saved Objects" as well.
+*Note: this method should work for "Saved Objects" as well.*
 
 1. Load an empty single player table
 2. Open up the in-game options menu.
