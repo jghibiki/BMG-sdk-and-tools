@@ -4,15 +4,14 @@
 ## Scraper
 Scrapes [this site](https://gilham.solutions/cards/1) for Batman Miniature Game character cards.
 
+Special thanks to `Tobias1087` on the [Arkham Rejects Discord](https://discord.gg/WzZeWzcgua) for implementing the card
+renderer that makes this possible.
+
 ## TTS Sheet Generator
 
 Generates a 10 x 7 card sheet set. The sheet sets can then
 be uploaded to a hosting source, and then imported into Tabletop Simulator
 using the [Custom Deck feature](https://kb.tabletopsimulator.com/custom-content/custom-deck/)
-
-Special thanks to `Tobias1087` on the [Arkham Rejects Discord](https://discord.gg/WzZeWzcgua) for implementing the card 
-renderer that makes this possible.
-
 
 [Link to generated card sheets](https://drive.google.com/drive/folders/1QLG_V4D5yEktQPRdAHFSVNVBvVjaJXOX?usp=sharing)
 
