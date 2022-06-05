@@ -1,7 +1,6 @@
-from typing import List
-from compendium.models.affiliation import Affiliation, Affiliation
+from compendium.models.affiliation import Affiliation
 from compendium.models.character import Character
-from compendium.models.equipment import Equipment
+
 
 def enhance_affiliation(affiliation: Affiliation,
                         compendium: Compendium,

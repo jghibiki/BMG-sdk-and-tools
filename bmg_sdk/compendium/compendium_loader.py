@@ -1,4 +1,3 @@
-from typing import Dict
 import requests
 
 from compendium.loaders.trait_loader import load_trait
@@ -7,7 +6,6 @@ from compendium.models.compendium import Compendium
 from compendium.loaders.affiliation_loader import load_affiliation
 from compendium.loaders.character_loader import load_character
 from compendium.loaders.equipment_loader import load_equipment
-from compendium.wrappers.affiliation_wrapper import AffiliationWrapper
 
 
 class CompendiumLoader:

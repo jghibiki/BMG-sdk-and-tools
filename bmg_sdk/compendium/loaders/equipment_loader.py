@@ -4,7 +4,6 @@ from unidecode import unidecode
 from compendium.loaders.trait_loader import load_trait_reference
 from compendium.models.compendium import Compendium
 from compendium.models.equipment import Equipment
-from compendium.models.trait import TraitReference
 
 
 def load_equipment(data: Dict, compendium: Compendium):

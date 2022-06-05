@@ -1,7 +1,6 @@
 from typing import List
 import requests
 from io import BytesIO
-from math import floor
 
 from compendium.enums.rank_type import RankType
 from compendium.models.character_affiliation import CharacterAffiliation

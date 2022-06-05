@@ -1,7 +1,7 @@
 from typing import Dict
 
 from compendium.loaders.character_affiliation_loader import load_character_affiliation
-from compendium.loaders.trait_loader import load_trait, load_trait_reference
+from compendium.loaders.trait_loader import load_trait_reference
 from compendium.models.character import Character
 from compendium.models.compendium import Compendium
 

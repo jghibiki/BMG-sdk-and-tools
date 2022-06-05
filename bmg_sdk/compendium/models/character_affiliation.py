@@ -1,4 +1,3 @@
-from compendium.models.affiliation import Affiliation
 from dataclasses import dataclass
 
 

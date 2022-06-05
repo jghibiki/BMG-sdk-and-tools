@@ -1,5 +1,4 @@
 import requests
-from compendium.models import compendium
 
 
 class Scraper:

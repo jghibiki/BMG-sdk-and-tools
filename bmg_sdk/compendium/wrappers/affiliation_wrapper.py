@@ -1,5 +1,4 @@
 from typing import List
-from compendium.enums.affiliation_type import AffiliationType
 from compendium.models.affiliation import Affiliation
 from compendium.wrappers.base_wrapper import BaseWrapper
 
