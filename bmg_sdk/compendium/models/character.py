@@ -2,9 +2,9 @@ from typing import List
 import requests
 from io import BytesIO
 
-from compendium.enums.rank_type import RankType
-from compendium.models.character_affiliation import CharacterAffiliation
-from compendium.models.trait import TraitReference
+from bmg_sdk.compendium.enums.rank_type import RankType
+from bmg_sdk.compendium.models.character_affiliation import CharacterAffiliation
+from bmg_sdk.compendium.models.trait import TraitReference
 
 try:
     from PIL import Image, ImageDraw

@@ -1,7 +1,7 @@
 from typing import List
 
-from compendium.models.upgrade import Upgrade
-from compendium.wrappers.base_wrapper import BaseWrapper
+from bmg_sdk.compendium.models.upgrade import Upgrade
+from bmg_sdk.compendium.wrappers.base_wrapper import BaseWrapper
 
 
 class UpgradeWrapper(BaseWrapper):

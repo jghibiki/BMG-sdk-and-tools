@@ -1,5 +1,5 @@
 from typing import Dict
-from compendium.models.damage import Damage
+from bmg_sdk.compendium.models.damage import Damage
 
 
 def load_damage(data: Dict):

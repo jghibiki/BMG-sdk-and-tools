@@ -1,5 +1,5 @@
 from typing import Dict
-from compendium.models.character_affiliation import CharacterAffiliation
+from bmg_sdk.compendium.models.character_affiliation import CharacterAffiliation
 
 
 def load_character_affiliation(data: Dict, compendium: "Compendium"):

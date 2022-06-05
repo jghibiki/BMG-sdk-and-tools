@@ -1,9 +1,9 @@
 from typing import Dict
 
-from compendium.loaders.character_affiliation_loader import load_character_affiliation
-from compendium.loaders.trait_loader import load_trait_reference
-from compendium.models.character import Character
-from compendium.models.compendium import Compendium
+from bmg_sdk.compendium.loaders.character_affiliation_loader import load_character_affiliation
+from bmg_sdk.compendium.loaders.trait_loader import load_trait_reference
+from bmg_sdk.compendium.models.character import Character
+from bmg_sdk.compendium.models.compendium import Compendium
 
 
 def load_character(data: Dict, compendium: Compendium):

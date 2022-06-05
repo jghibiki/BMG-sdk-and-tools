@@ -1,6 +1,6 @@
 from typing import List
-from compendium.wrappers.base_wrapper import BaseWrapper
-from compendium.models.character import Character
+from bmg_sdk.compendium.wrappers.base_wrapper import BaseWrapper
+from bmg_sdk.compendium.models.character import Character
 
 
 class CharacterWrapper(BaseWrapper):

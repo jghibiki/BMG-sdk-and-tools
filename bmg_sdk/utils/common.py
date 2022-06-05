@@ -9,7 +9,8 @@ class Paths:
 
     @staticmethod
     def create_output_dir():
-        Paths.output.mkdir()
+        if not Paths.output.exists():
+            Paths.output.mkdir()
 
     @staticmethod
     def create_card_output_dir():

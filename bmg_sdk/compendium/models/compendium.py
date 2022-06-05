@@ -1,14 +1,14 @@
 from typing import List
 
-from compendium.models.affiliation import Affiliation
-from compendium.models.character import Character
-from compendium.models.equipment import Equipment
-from compendium.models.upgrade import Upgrade
-from compendium.models.weapon import Weapon
-from compendium.wrappers.affiliation_wrapper import AffiliationWrapper
-from compendium.wrappers.character_wrapper import CharacterWrapper
-from compendium.wrappers.upgrade_wrapper import UpgradeWrapper
-from compendium.wrappers.weapon_wrapper import WeaponWrapper
+from bmg_sdk.compendium.models.affiliation import Affiliation
+from bmg_sdk.compendium.models.character import Character
+from bmg_sdk.compendium.models.equipment import Equipment
+from bmg_sdk.compendium.models.upgrade import Upgrade
+from bmg_sdk.compendium.models.weapon import Weapon
+from bmg_sdk.compendium.wrappers.affiliation_wrapper import AffiliationWrapper
+from bmg_sdk.compendium.wrappers.character_wrapper import CharacterWrapper
+from bmg_sdk.compendium.wrappers.upgrade_wrapper import UpgradeWrapper
+from bmg_sdk.compendium.wrappers.weapon_wrapper import WeaponWrapper
 
 
 class Compendium:

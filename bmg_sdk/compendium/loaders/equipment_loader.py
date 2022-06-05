@@ -1,9 +1,9 @@
 from typing import Dict
 from unidecode import unidecode
 
-from compendium.loaders.trait_loader import load_trait_reference
-from compendium.models.compendium import Compendium
-from compendium.models.equipment import Equipment
+from bmg_sdk.compendium.loaders.trait_loader import load_trait_reference
+from bmg_sdk.compendium.models.compendium import Compendium
+from bmg_sdk.compendium.models.equipment import Equipment
 
 
 def load_equipment(data: Dict, compendium: Compendium):

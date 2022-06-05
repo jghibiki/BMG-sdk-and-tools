@@ -1,8 +1,8 @@
 from typing import List
 from dataclasses import dataclass
 
-from compendium.models.damage import Damage
-from compendium.models.trait import TraitReference
+from bmg_sdk.compendium.models.damage import Damage
+from bmg_sdk.compendium.models.trait import TraitReference
 
 
 @dataclass

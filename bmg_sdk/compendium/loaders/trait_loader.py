@@ -1,5 +1,5 @@
 from typing import Dict
-from compendium.models.trait import Trait, TraitReference
+from bmg_sdk.compendium.models.trait import Trait, TraitReference
 
 
 def load_trait_reference(data: Dict, compendium: "Compendium"):

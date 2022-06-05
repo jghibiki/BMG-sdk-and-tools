@@ -1,11 +1,11 @@
 import requests
 
-from compendium.loaders.trait_loader import load_trait
-from compendium.loaders.weapon_loader import load_weapon
-from compendium.models.compendium import Compendium
-from compendium.loaders.affiliation_loader import load_affiliation
-from compendium.loaders.character_loader import load_character
-from compendium.loaders.equipment_loader import load_equipment
+from bmg_sdk.compendium.loaders.trait_loader import load_trait
+from bmg_sdk.compendium.loaders.weapon_loader import load_weapon
+from bmg_sdk.compendium.models.compendium import Compendium
+from bmg_sdk.compendium.loaders.affiliation_loader import load_affiliation
+from bmg_sdk.compendium.loaders.character_loader import load_character
+from bmg_sdk.compendium.loaders.equipment_loader import load_equipment
 
 
 class CompendiumLoader:

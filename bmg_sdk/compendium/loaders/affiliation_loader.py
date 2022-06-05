@@ -1,6 +1,6 @@
 from typing import Dict
-from compendium.models.affiliation import Affiliation
-from compendium.models.compendium import Compendium
+from bmg_sdk.compendium.models.affiliation import Affiliation
+from bmg_sdk.compendium.models.compendium import Compendium
 
 
 def load_affiliation(data: Dict, compendium: Compendium):

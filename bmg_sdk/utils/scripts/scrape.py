@@ -12,13 +12,13 @@ def main():
     compendium = CompendiumLoader().load()
 
     print("Scrape cards")
-    Scraper().scrape()
+    #Scraper(compendium).scrape()
 
     print("Building TTS Deck Sheets")
-    TtsDeckGenerator().generate()
+    #TtsDeckGenerator(compendium).generate()
 
     print("Building Printable Card Sheets")
-    DocxGenerator().generate()
+    DocxGenerator(compendium).generate()
 
 
 if __name__ == "__main__":

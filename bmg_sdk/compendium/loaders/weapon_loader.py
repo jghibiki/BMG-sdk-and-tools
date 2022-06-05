@@ -1,9 +1,9 @@
 from typing import Dict
 from functools import reduce
 
-from compendium.loaders.trait_loader import load_trait_reference
-from compendium.models.weapon import RawWeapon
-from compendium.loaders.damage_loader import load_damage
+from bmg_sdk.compendium.loaders.trait_loader import load_trait_reference
+from bmg_sdk.compendium.models.weapon import RawWeapon
+from bmg_sdk.compendium.loaders.damage_loader import load_damage
 
 
 def load_weapon(data: Dict, compendium):

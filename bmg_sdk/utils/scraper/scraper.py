@@ -10,6 +10,8 @@ from bmg_sdk.utils.common import Paths, get_sanitized_name, get_character_dir_na
 
 class Scraper:
     delay = 5
+    card_bg_div = "Card_card__39xAa"
+    card_parent_div = "Card_characters__iuvFJ"
 
     def __init__(self, compendium: Compendium):
         self.browser = None
@@ -23,21 +25,21 @@ class Scraper:
             WebDriverWait(self.browser, Scraper.delay)
                 .until(
                 EC.visibility_of_element_located(
-                    (By.CLASS_NAME, "Card_card__39xAa")
+                    (By.CLASS_NAME, Scraper.card_bg_div)
                 )
             )
         )
 
     def _wait_for_card_image_to_load(self):
-        self.browser.execute_async_script("""
+        self.browser.execute_async_script(f"""
             var done = arguments[0];
             var a = new Image;
             a.onload = () => done(true);
-            a.src = document.getElementsByClassName( 'Card_card__39xAa' )[0].style.backgroundImage.replace('url(\"', "").replace('\")', "")
+            a.src = document.getElementsByClassName( '{Scraper.card_bg_div}' )[0].style.backgroundImage.replace('url(\"', "").replace('\")', "")
         """)
 
     def _locate_image_elements(self, character):
-        elem = self.browser.find_element(By.CLASS_NAME, "Card_characters__iuvFJ")
+        elem = self.browser.find_element(By.CLASS_NAME, Scraper.card_parent_div)
 
         name = get_sanitized_name(character)
         children = elem.find_elements(By.XPATH, "./*")

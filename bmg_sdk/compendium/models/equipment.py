@@ -1,6 +1,6 @@
 from typing import List
 
-from compendium.models.trait import TraitReference
+from bmg_sdk.compendium.models.trait import TraitReference
 
 
 class Equipment:
