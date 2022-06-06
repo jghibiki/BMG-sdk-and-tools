@@ -11,10 +11,13 @@ from bmg_sdk.compendium.loaders.equipment_loader import load_equipment
 class CompendiumLoader:
     def __init__(self):
         self._raw_data = None
+        self._compendium = None
 
     def load(self):
-        self._fetch_compendium_data()
-        return self._build_compendium()
+        if self._compendium is None:
+            self._fetch_compendium_data()
+            self._compendium = self._build_compendium()
+        return self._compendium
 
     def _fetch_compendium_data(self):
         response = requests.get("https://app.knightmodels.com/gamedata")

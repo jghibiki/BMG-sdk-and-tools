@@ -1,0 +1,26 @@
+harley quinn (the suicide squad):
+  1:
+    blood: 0
+    stun: 0
+    status:
+  2:
+    blood: 1
+    stun: 3
+    status:
+      - KO
+  3:
+    blood: 7
+    stun: 4
+    status:
+      - Casualty
+deadshot (classic):
+  1:
+    blood: 0
+    stun: 0
+    status:
+  2:
+    blood: 7
+    stun: 8
+    status:
+      - Casualty
+

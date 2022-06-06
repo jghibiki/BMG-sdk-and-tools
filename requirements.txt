@@ -11,3 +11,5 @@ seaborn
 
 # card info clips
 moviepy
+thefuzz
+pyyaml

@@ -1,6 +1,7 @@
 from PIL import Image
 
 from bmg_sdk.utils.common import Paths, get_character_dir_name
+from bmg_sdk.utils.scraper.util import character_card_paths
 
 
 class TtsDeckGenerator:
@@ -23,12 +24,15 @@ class TtsDeckGenerator:
             card_h * h
         )
 
-        for side in ("front", "back"):
+
+        for c in characters:
             grid = Image.new("RGB", size=grid_size)
 
-            for c in characters:
-                card_dir = Paths.card_output / get_character_dir_name(c)
-                card_img = Image.open(card_dir / f"{side}.png")
+            front, back = character_card_paths(c)
+
+            for side in ("front", "back"):
+                card_path = front if side == "front" else back
+                card_img = Image.open(card_path)
                 relative_id = c.id - (70 * (sheet_number - 1))
                 offset_x = (relative_id % w) * card_w
                 offset_y = (relative_id // w) * card_h

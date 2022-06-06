@@ -5,6 +5,8 @@ from tqdm import tqdm
 from docx import Document
 from docx.shared import Inches
 
+from bmg_sdk.utils.scraper.util import character_card_paths
+
 
 class DocxGenerator:
     def __init__(self, compendium: Compendium):
@@ -33,9 +35,7 @@ class DocxGenerator:
             for character in affiliation.all_characters:
                 p = document.add_paragraph()
                 r = p.add_run()
-                card_dir = Paths.card_output / get_character_dir_name(character)
-                front = (card_dir / "front.png")
-                back = (card_dir / "back.png")
+                front, back = character_card_paths(character)
                 for side in (front, back):
                     r.add_picture(
                         str(side),
