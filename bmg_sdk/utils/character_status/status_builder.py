@@ -88,10 +88,7 @@ class StatusBuilder:
     def _stun(self, round:int ):
         return self.config[round].get("stun", 0)
 
-    def _build_round_status(self, round: int):
-        (image_path, _) = character_card_paths(self.character)
-        card_clip = ImageClip(str(image_path), duration=0.5)
-
+    def _build_blood_and_stun_clips(self, round):
         blood_stun_layers = []
         blood = self._blood(round)
         stun = self._stun(round)
@@ -105,9 +102,24 @@ class StatusBuilder:
             blood_stun_layers.append(stun_text_clip)
             blood_stun_layers.append(stun_img_clip)
 
+        return blood_stun_layers
+
+    def _build_status_layers(self, round):
+
+        return [] # TODO
+
+
+    def _build_round_status(self, round: int):
+        (image_path, _) = character_card_paths(self.character)
+        card_clip = ImageClip(str(image_path), duration=0.5)
+
+        blood_stun_layers = self._build_blood_and_stun_clips(round)
+        status_layers = self._build_status_layers(round)
+
         card_with_stats_clip = CompositeVideoClip([
             card_clip,
-            *blood_stun_layers
+            *blood_stun_layers,
+            *status_layers
         ])
 
         card_fade_in_clip = card_with_stats_clip.fx(
