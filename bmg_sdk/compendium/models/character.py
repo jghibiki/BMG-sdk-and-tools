@@ -83,13 +83,13 @@ class Character:
     def weapons(self):
         if self._weapons is None:
             self._weapons = self._compendium.weapons.filter(self._weapon_ids)
-        return self._rival_affiliations
+        return self._weapons
 
     @property
     def upgrades(self):
         if self._upgrades is None:
             self._upgrades = self._compendium.upgrades.filter(self._upgrade_ids)
-        return self._rival_affiliations
+        return self._upgrades
 
     def __repr__(self):
         return f"Character[{self.alias} ({self.name})]"

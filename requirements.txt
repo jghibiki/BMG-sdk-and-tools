@@ -1,6 +1,13 @@
+# scraper
 selenium
 pillow
 requests
 unidecode
 tqdm
 python-docx
+
+# stats
+seaborn
+
+# card info clips
+moviepy

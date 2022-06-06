@@ -2,6 +2,7 @@ from typing import Dict
 from functools import reduce
 
 from bmg_sdk.compendium.loaders.trait_loader import load_trait_reference
+from bmg_sdk.compendium.models.damage import Damage
 from bmg_sdk.compendium.models.weapon import RawWeapon
 from bmg_sdk.compendium.loaders.damage_loader import load_damage
 
@@ -12,7 +13,7 @@ def load_weapon(data: Dict, compendium):
         d = [load_damage(d) for d in _d]
         damage = reduce(lambda a, b: a + b, d)
     else:
-        damage = None
+        damage = Damage()
 
     return RawWeapon(
         id=data["id"],

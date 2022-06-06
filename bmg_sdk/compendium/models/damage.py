@@ -3,8 +3,9 @@ from math import floor
 
 @dataclass
 class Damage:
-    stun: int
-    blood: int
+    def __init__(self, stun=0, blood=0):
+        self.stun = stun
+        self.blood = blood
 
     def __add__(self, other):
         if isinstance(other, Damage):
@@ -38,3 +39,5 @@ class Damage:
         else:
             print("unknown type of damage subtract operation")
 
+    def __repr__(self):
+        return f"Damage[stun={self.stun} blood={self.blood}]"
