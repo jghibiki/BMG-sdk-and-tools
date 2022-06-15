@@ -69,7 +69,7 @@ https://drive.google.com/uc?export=download&id=
 Generates `.docx` files containing the character cards in a 3.5" x 2.5" printable format. The docx files are grouped
 by affiliation, meaning that some cards usable by multiple affiliations may be duplicated. 
 
-The latest generated sheets can be found on [Google Drive](https://drive.google.com/drive/folders/1rOblle0vGKcGQrTGBC88SlWbJ21hlL58?usp=sharing).
+The latest generated sheets can be found on [Google Drive](https://drive.google.com/drive/folders/1baWzmCOJj-5rFIbx9RzghQzhLSC-a0dr?usp=sharing).
 
 ## TODO
 - Finish implementing SDK
