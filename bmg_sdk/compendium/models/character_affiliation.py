@@ -20,5 +20,5 @@ class CharacterAffiliation:
     @property
     def affiliation(self):
         if self._affiliation is None:
-            self._affiliation = self._compendium.affiliations.get(self.id)
+            self._affiliation = self._compendium.affiliations.find(self.id)
         return self._affiliation

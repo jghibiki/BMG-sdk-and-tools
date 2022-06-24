@@ -32,23 +32,32 @@ class TtsDeckGenerator:
             grid = Image.new("RGB", size=grid_size)
 
             for c in characters:
+                print(c.alias)
                 front, back = character_card_paths(c)
 
                 card_path = front if side == "front" else back
                 card_img = Image.open(card_path)
-                id = c.id - 1 # shift over 1 to use index 0 position
+                id = c.id  # shift over 1 to use index 0 position
                 relative_id = id - (70 * (sheet_number - 1))
                 coord_x = (relative_id % w)
                 coord_y = (relative_id // w)
-                offset_x =  coord_x * card_w
+                offset_x = coord_x * card_w
                 offset_y = coord_y * card_h
                 grid.paste(card_img, box=(offset_x, offset_y))
 
-                sheet_manifest.append({
-                    "name": f"{c.alias} - {c.name}",
-                    "x": coord_x,
-                    "y": coord_y
-                })
+                if side == "front": # make sure we only do this once
+                    sheet_manifest.append({
+                        "id": c.id,
+                        "name": f"{c.alias} - {c.name}",
+                        "x": coord_x + 1, # tts decks are coordinate based starting at 1
+                        "y": coord_y + 1,
+                        "affiliations": list(
+                            map(
+                                lambda e: e.affiliation.name,
+                                c.affiliations
+                            )
+                        )
+                    })
 
             output_file = Paths.sheet_output / f"sheet_{sheet_number}_{side}.png"
             grid.save(output_file)
@@ -67,18 +76,27 @@ class TtsDeckGenerator:
         # assign sheets by id, leaving blanks for spots that don't have a character with
         # matching id.
         for character in sorted(self.compendium.characters.all, key=lambda el:el.id):
-            sheet.append(character)
-
             if character.id // 70 != sheet_number - 1:
                 manifest_entry = self.build_sheet(sheet, sheet_number)
                 self._add_sheet_manifest(sheet_number, manifest_entry)
                 sheet_number += 1
                 sheet = []
 
+            sheet.append(character)
+
         if len(sheet) > 0:  # cut last sheet
             manifest_entry = self.build_sheet(sheet, sheet_number)
             self._add_sheet_manifest(sheet_number, manifest_entry)
 
         with (Paths.sheet_output / "manifest.json").open("w") as f:
-            json.dump(self.manifest, f, indent=4)
+            m = {
+                "cards": self.manifest,
+                "affiliations": list(
+                    map(
+                       lambda e: e.name,
+                        self.compendium.affiliations.all
+                    )
+                )
+            }
+            json.dump(m, f, indent=4)
 
