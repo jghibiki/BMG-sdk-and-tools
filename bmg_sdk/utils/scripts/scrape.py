@@ -12,10 +12,10 @@ def main():
     compendium = CompendiumLoader().load()
 
     print("Scrape cards")
-    #Scraper(compendium).scrape()
+    Scraper(compendium).scrape()
 
     print("Building TTS Deck Sheets")
-    #TtsDeckGenerator(compendium).generate()
+    TtsDeckGenerator(compendium).generate()
 
     print("Building Printable Card Sheets")
     DocxGenerator(compendium).generate()

@@ -57,6 +57,7 @@ class Scraper:
 
     def scrape(self):
         self.setup_browser()
+        Paths.create_card_output_dir()
 
         for character in tqdm(self.compendium.characters.all):
             self.browser.get(character.get_card_url())

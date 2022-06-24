@@ -1,3 +1,4 @@
+import json
 from PIL import Image
 
 from bmg_sdk.utils.common import Paths, get_character_dir_name
@@ -7,8 +8,9 @@ from bmg_sdk.utils.scraper.util import character_card_paths
 class TtsDeckGenerator:
 
     def __init__(self, compendium):
-        Paths.create_sheet_output_dir()
+        #Paths.create_sheet_output_dir()
         self.compendium = compendium
+        self.manifest = {}
 
     @staticmethod
     def build_sheet(characters, sheet_number):
@@ -24,35 +26,59 @@ class TtsDeckGenerator:
             card_h * h
         )
 
+        sheet_manifest = []
 
-        for c in characters:
+        for side in ("front", "back"):
             grid = Image.new("RGB", size=grid_size)
 
-            front, back = character_card_paths(c)
+            for c in characters:
+                front, back = character_card_paths(c)
 
-            for side in ("front", "back"):
                 card_path = front if side == "front" else back
                 card_img = Image.open(card_path)
-                relative_id = c.id - (70 * (sheet_number - 1))
-                offset_x = (relative_id % w) * card_w
-                offset_y = (relative_id // w) * card_h
+                id = c.id - 1 # shift over 1 to use index 0 position
+                relative_id = id - (70 * (sheet_number - 1))
+                coord_x = (relative_id % w)
+                coord_y = (relative_id // w)
+                offset_x =  coord_x * card_w
+                offset_y = coord_y * card_h
                 grid.paste(card_img, box=(offset_x, offset_y))
+
+                sheet_manifest.append({
+                    "name": f"{c.alias} - {c.name}",
+                    "x": coord_x,
+                    "y": coord_y
+                })
 
             output_file = Paths.sheet_output / f"sheet_{sheet_number}_{side}.png"
             grid.save(output_file)
             print(f"Exported sheet {sheet_number} - {side}")
+        return sheet_manifest
+
+    def _add_sheet_manifest(self, sheet_number, sheet_manifest):
+        self.manifest[sheet_number] = sheet_manifest
 
     def generate(self):
         sheet_number = 1
         sheet = []
 
-        # assign sheets by id, leaving blanks for spots that don't have a charracter with
+        manifest = {}
+
+        # assign sheets by id, leaving blanks for spots that don't have a character with
         # matching id.
-        for character in self.compendium.characters.all:
+        for character in sorted(self.compendium.characters.all, key=lambda el:el.id):
+            sheet.append(character)
+
             if character.id // 70 != sheet_number - 1:
-                self.build_sheet(sheet, sheet_number)
+                manifest_entry = self.build_sheet(sheet, sheet_number)
+                self._add_sheet_manifest(sheet_number, manifest_entry)
                 sheet_number += 1
                 sheet = []
 
-            sheet.append(character)
+        if len(sheet) > 0:  # cut last sheet
+            manifest_entry = self.build_sheet(sheet, sheet_number)
+            self._add_sheet_manifest(sheet_number, manifest_entry)
+
+        with (Paths.sheet_output / "manifest.json").open("w") as f:
+            json.dump(self.manifest, f, indent=4)
 
