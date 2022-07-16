@@ -18,11 +18,10 @@ class Simulation:
                   strength_dice,
                   attack,
                   defense,
-                  attacker_efforts,
-                  defender_efforts,
+                  efforts,
                   damage):
-        recorded_hits = {}
-        attack_dice = attack + attacker_efforts - defender_efforts
+        recorded_hits = []
+        attack_dice = attack + efforts
         for _ in range(iterations):
             strength_rolls = [self._roll() for _ in range(strength_dice)]
             strength_hits = sum([
@@ -45,36 +44,34 @@ class Simulation:
             total_hits = unblocked_hits + strength_hits
 
             if total_hits not in recorded_hits:
-                recorded_hits[total_hits] = 1
+                recorded_hits.append(total_hits)
             else:
-                recorded_hits[total_hits] += 1
+                recorded_hits.append(total_hits)
 
         return {
-            (damage.stun*value, damage.blood*value): count
-            for value, count in recorded_hits.items()
+            Damage(damage.stun*value, damage.blood*value)
+            for value in recorded_hits
         }
 
-    def simulate_ranged(self, attacker: Character, weapon: Weapon, defender_efforts=0, iterations=1000):
+    def simulate_ranged(self, attacker: Character, weapon: Weapon, defense, efforts, iterations=1000):
         return self._simulate(
             iterations,
             attacker.strength,
             strength_dice=1,
             attack=weapon.rate_of_fire,
-            defense=0,
-            attacker_efforts=0,
-            defender_efforts=defender_efforts,
+            defense=defense,
+            efforts=efforts,
             damage=weapon.damage
         )
 
-    def simulate_melee(self, attacker: Character, defense, attacker_efforts, defender_efforts=0, iterations=1000):
+    def simulate_melee(self, attacker: Character, defense, efforts, iterations=1000):
         return self._simulate(
             iterations,
             attacker.strength,
             strength_dice=1,
             attack=attacker.attack,
             defense=defense,
-            attacker_efforts=attacker_efforts,
-            defender_efforts=defender_efforts,
+            efforts=efforts,
             damage=Damage(stun=1)
         )
 

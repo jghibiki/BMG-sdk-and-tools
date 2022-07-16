@@ -1,88 +1,75 @@
-from bmg_sdk.compendium.compendium_loader import CompendiumLoader
-from simulation import Simulation
 import json
-from pprint import pprint
+
 import seaborn as sns
-from pandas import DataFrame
-import matplotlib.pyplot as plt
+
+from bmg_sdk.compendium.compendium_loader import CompendiumLoader
+from bmg_sdk.utils.common import Paths, get_character_dir_name
+from simulation import Simulation
 
 sns.set_theme()
 
-effort_combos = [
-    (3, 0),
-    (2, 0),
-    (1, 0),
-    (0, 0),
-    (0, 1),
-    (0, 2),
-    (0, 3),
-]
-
-ranged_effort_combos = [0, 1, 2, 3]
+melee_effort_combos = [-3, -2, -1, 0, 1, 2, 3]
+ranged_effort_combos = [0, -1, -2, -3]
+defense = [0, 1, 2, 3, 4, 5, 6]
 
 def main():
     compendium = CompendiumLoader().load()
 
-    data = {}
+    Paths.create_stats_output_dir()
 
+    build_stats(compendium)
+
+
+def build_stats(compendium):
     for c in compendium.characters.non_eternal:
         name = f"Character: {c.alias} ({c.name})"
         print(f"Simulating attacks for: {name}")
-        data[name] = {
-            "melee": Simulation().simulate_melee(c, 4, 0, 0)
-        }
+        data = {}
 
         for w in c.weapons:
-            if w.rate_of_fire is None:
-                distributions = [
-                    (
-                        efforts[0] + efforts[1]*-1,
-                        damage,
-                    )
-                for efforts in effort_combos
-                for damage, count in sorted(
-                        Simulation().simulate_melee(c, 4, efforts[0], defender_efforts=efforts[1]).items(),
-                        key=lambda e: e[0]
-                    )
-                for _ in range(count)
-                ]
-            else:
-                distributions = [
-                    (
-                            efforts * -1,
-                            damage,
-                    )
-                    for efforts in ranged_effort_combos
-                    for damage, count in sorted(
-                        Simulation().simulate_ranged(c, w, defender_efforts=efforts).items(),
-                        key=lambda e: e[0]
-                    )
+            print(f"Weapon {w.name}")
+            weapon_dist = {}
 
-                    for _ in range(count)
-                ]
+            for d in defense:
+                dist = {}
 
-            distributions = {
-                "effort_offset" : list(map(lambda e: e[0], distributions)),
-                "stun_damage": list(map(lambda e: e[1][0], distributions)),
-                "blood_damage": list(map(lambda e: e[1][0], distributions)),
-            }
+                if w.rate_of_fire is None:
+                    for efforts in melee_effort_combos:
+                        damage = Simulation().simulate_melee(c, d, efforts)
+                        dist[f"{efforts} efforts"] = calculate_probs(damage)
 
-            plot_data = DataFrame.from_dict(distributions)
-            plot_data = plot_data.fillna(0)
+                else:
+                    for efforts in ranged_effort_combos:
+                        damage = Simulation().simulate_ranged(c, w, d, efforts=efforts)
+                        dist[f"{efforts} efforts"] = calculate_probs(damage)
 
-            print(plot_data)
-            sns.jointplot(data=plot_data, hue="effort_offset", x="stun_damage", y="blood_damage")
-            plt.title(f"{name} {w.name}")
-            plt.show(block=True)
+                weapon_dist[f"defense {d}"] = dist
 
-            data[name][w.name] = distributions
+            data[w.name] = weapon_dist
+
+        name = get_character_dir_name(c)
+        with open(Paths.stats_report_output / f"{name}.json", "w") as f:
+            json.dump(data, f, indent=4)
 
 
-    with open("stats.json", "w") as f:
-        json.dump(data, f, indent=4)
+def calculate_probs(damage):
+    stats = {}
+    total = 0
+    for d in damage:
+        if d not in stats:
+            stats[d] = 0
+        stats[d] += 1
+        total += 1
 
+    probs = []
+    for d, v in stats.items():
+        probs.append({
+            "stun": d.stun,
+            "blood": d.blood,
+            "prob": v / total
+        })
 
-
+    return probs
 
 
 if __name__ == "__main__":

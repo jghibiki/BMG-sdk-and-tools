@@ -7,6 +7,8 @@ class Paths:
     sheet_output = output / "sheets"
     docx_output = output / "docx"
     card_info_output = output / "card_info"
+    stats_output = output / "stats"
+    stats_report_output = stats_output / "reports"
 
     @staticmethod
     def create_output_dir():
@@ -28,6 +30,11 @@ class Paths:
     @staticmethod
     def create_docx_output_dir():
         Paths._create_dir(Paths.docx_output)
+
+    @staticmethod
+    def create_stats_output_dir():
+        Paths._create_dir(Paths.stats_output)
+        Paths._create_dir(Paths.stats_report_output)
 
     @staticmethod
     def _create_dir(path: Path):

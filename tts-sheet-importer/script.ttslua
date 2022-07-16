@@ -493,15 +493,33 @@ local sheets = {
   }
 }
 
+function cardHasAffiliation(affiliation, card)
+  for _, a in pairs(card["affiliations"]) do
+    if affiliation == a then
+      return true
+    end
+  end
+  return false
+end
 
-function loadDeck(manifest)
-  broadcastToAll("loading deck")
-  local deck = {}
+function lookupByAffiliation(affiliation, cards)
+  broadcastToAll("Loading cards for affiliation " .. affiliation)
+  selected_cards = {}
+  for _, card in pairs(cards) do
+    if cardHasAffiliation(affiliation, card) then
+      table.insert(selected_cards, card["card"])
+    end
+  end
+  broadcastToAll("Found " .. #selected_cards .. " cards.")
+  return selected_cards
+end
 
+function loadCards(manifest)
+  cards = {}
 
   for sheet_id, links in pairs(sheets) do
     broadcastToAll("loading sheet" .. sheet_id)
-    sheet_manifest = manifest[sheet_id]
+    sheet_manifest = manifest["cards"][sheet_id]
 
     local front = urlPrefix .. links.front
     local back = urlPrefix .. links.back
@@ -524,14 +542,44 @@ function loadDeck(manifest)
         cardAsset, y, x, {name=name}
       )
 
-      table.insert(deck, card)
+      character["card"] = card
+
+      table.insert(cards, character)
     end
   end
+  return cards
+end
 
-  local deckSize = #deck
-  broadcastToAll("assembling deck. Cards: " .. tostring(deckSize))
-  deckAsset = Decker.Deck(deck, {name="Test"})
-  deckAsset:spawn()
+function buildAffiliationDecks(affiliations, cards)
+  decks = {}
+  for _, affiliation in pairs(affiliations) do
+    found_cards = lookupByAffiliation(affiliation, cards)
+    card_count = #cards
+    if card_count > 0 then
+      deck = Decker.Deck(found_cards, {name=affiliation})
+      table.insert(decks, deck)
+    end
+  end
+  return decks
+end
+
+function loadDeck(manifest)
+  broadcastToAll("loading deck")
+  local cards = loadCards(manifest)
+  local decks = buildAffiliationDecks(manifest["affiliations"], cards)
+
+  x = 5
+  y = 5
+  for i, deck in pairs(decks) do
+    coord_x = ((i % x) * 5) - 5
+    coord_y = (math.floor(i/y) * 5) - 5
+    deck:spawn(
+      {
+        position={coord_x, 0, coord_y},
+        rotation={0, 180, 0}
+      }
+    )
+  end
 end
 
 

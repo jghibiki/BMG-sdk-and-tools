@@ -3,7 +3,7 @@ from bmg_sdk.compendium.models.damage import Damage
 
 
 def load_damage(data: Dict):
-    if dict["damange_type_id"] == 0:
+    if data["damage_type_id"] == 1:
         blood = data["count"]
         stun = 0
     else:

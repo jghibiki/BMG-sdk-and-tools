@@ -1,9 +1,12 @@
 from dataclasses import dataclass
 from math import floor
+from uuid import uuid4
+
 
 @dataclass
 class Damage:
     def __init__(self, stun=0, blood=0):
+        self._id = hash(f"{stun}_{blood}")
         self.stun = stun
         self.blood = blood
 
@@ -41,3 +44,9 @@ class Damage:
 
     def __repr__(self):
         return f"Damage[stun={self.stun} blood={self.blood}]"
+
+    def __hash__(self):
+        return self._id
+
+    def __eq__(self, other):
+        return self.blood == other.blood and self.stun == other.stun
