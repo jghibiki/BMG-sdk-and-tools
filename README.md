@@ -28,6 +28,18 @@ Scrapes [this site](https://gilham.solutions/cards/1) for Batman Miniature Game 
 Special thanks to `Tobias1087` on the [Arkham Rejects Discord](https://discord.gg/WzZeWzcgua) for implementing the card
 renderer that makes this possible.
 
+### Installing dependencies
+```shell
+pip install -r requirements.txt
+```
+
+### Instructions for running the scraper
+
+Run the following command in the terminal from the root of the repository.
+```shell
+python -m bmg_sdk.utils.scripts.scrape
+```
+
 ## TTS Sheet Generator
 
 Generates a 10 x 7 card sheet set. The sheet sets can then
